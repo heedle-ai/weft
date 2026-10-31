@@ -25,7 +25,8 @@ func Par[A, B, C any](f Arrow[A, B], g Arrow[A, C]) Arrow[A, Pair[B, C]] {
 	}
 }
 
-// ParStrict is like Par but cancels the sibling on first error.
+// ParStrict is like Par but cancels the sibling on first error. It
+// returns that first error, not the sibling's resulting cancellation.
 func ParStrict[A, B, C any](f Arrow[A, B], g Arrow[A, C]) Arrow[A, Pair[B, C]] {
 	return func(ctx context.Context, a A) (Pair[B, C], error) {
 		ctx, cancel := context.WithCancel(ctx)
@@ -33,29 +34,33 @@ func ParStrict[A, B, C any](f Arrow[A, B], g Arrow[A, C]) Arrow[A, Pair[B, C]] {
 
 		var b B
 		var c C
-		var bErr, cErr error
+		var first error
+		var once sync.Once
+		fail := func(err error) {
+			once.Do(func() {
+				first = err
+				cancel()
+			})
+		}
 		var wg sync.WaitGroup
 		wg.Add(2)
 		go func() {
 			defer wg.Done()
-			b, bErr = f(ctx, a)
-			if bErr != nil {
-				cancel()
+			var err error
+			if b, err = f(ctx, a); err != nil {
+				fail(err)
 			}
 		}()
 		go func() {
 			defer wg.Done()
-			c, cErr = g(ctx, a)
-			if cErr != nil {
-				cancel()
+			var err error
+			if c, err = g(ctx, a); err != nil {
+				fail(err)
 			}
 		}()
 		wg.Wait()
-		if bErr != nil {
-			return Pair[B, C]{}, bErr
-		}
-		if cErr != nil {
-			return Pair[B, C]{}, cErr
+		if first != nil {
+			return Pair[B, C]{}, first
 		}
 		return Pair[B, C]{Fst: b, Snd: c}, nil
 	}

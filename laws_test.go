@@ -247,6 +247,23 @@ func TestParStrict_OneFailsCancelsOther(t *testing.T) {
 
 // === Sum ======================================================================
 
+func TestParStrict_ReturnsTheCauseNotTheCancellation(t *testing.T) {
+	boom := errors.New("boom")
+	waits := ArrowFunc(func(ctx context.Context, _ int) (int, error) {
+		<-ctx.Done()
+		return 0, ctx.Err()
+	})
+	fails := ArrowFunc(func(context.Context, int) (int, error) { return 0, boom })
+	for i := 0; i < 50; i++ {
+		if _, err := ParStrict(waits, fails)(context.Background(), 1); !errors.Is(err, boom) {
+			t.Fatalf("ParStrict(waits, fails) = %v, want boom", err)
+		}
+		if _, err := ParStrict(fails, waits)(context.Background(), 1); !errors.Is(err, boom) {
+			t.Fatalf("ParStrict(fails, waits) = %v, want boom", err)
+		}
+	}
+}
+
 func TestSum_DispatchesLeft(t *testing.T) {
 	leftCalled := atomic.Bool{}
 	rightCalled := atomic.Bool{}

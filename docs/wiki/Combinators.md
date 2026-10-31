@@ -22,7 +22,7 @@ Every function below works on any `Arrow[A, B]`, whatever it wraps. The **Exampl
 | Function | Signature | Notes |
 |---|---|---|
 | `Par` | `Par(f Arrow[A, B], g Arrow[A, C]) Arrow[A, Pair[B, C]]` | Runs both concurrently on the same input. Both errors are joined with `errors.Join`. Example: `ExamplePar` |
-| `ParStrict` | same as `Par` | Cancels the sibling as soon as one fails |
+| `ParStrict` | same as `Par` | Cancels the sibling as soon as one fails, and returns that first error |
 | `Par3` | three arrows → `Triple` | Three-way `Par` |
 | `Fanout` | same as `Par` | Identical to `Par`; the name signals intent |
 | `Fst`, `Snd` | `Arrow[Pair[A, B], A]`, `Arrow[Pair[A, B], B]` | Projections |
