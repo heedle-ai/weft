@@ -52,10 +52,10 @@ This is `ExampleCompose` in `doc_examples_test.go`, so `go test` checks it.
 
 ## 3. Work on weft itself
 
-heddle's repos refer to each other by relative path, so clone them as siblings:
+heedle-ai's repos refer to each other by relative path, so clone them as siblings:
 
 ```bash
-mkdir -p ~/src/heddle && cd ~/src/heddle
+mkdir -p ~/src/heedle-ai && cd ~/src/heedle-ai
 git clone https://github.com/heedle-ai/weft.git
 cd weft
 go vet ./...

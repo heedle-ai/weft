@@ -1,6 +1,6 @@
 # weft
 
-Categorical composition primitives for Go. Part of [heddle](https://github.com/heedle-ai).
+Categorical composition primitives for Go. Part of [heedle-ai](https://github.com/heedle-ai).
 
 Every step of a computation (a pure function, an LLM call, a tool call, a
 parallel fan-out) is the same type:
