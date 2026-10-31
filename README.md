@@ -11,7 +11,7 @@ type Arrow[A, B any] func(ctx context.Context, a A) (B, error)
 
 `Arrow` is a Kleisli arrow for the error-and-context effect. The combinators
 (`Compose`, `Pipe2`–`Pipe6`, `Par`, `Sum`, `Map`, `Traverse`, `WithRetry`,
-`WithTimeout`, `WithTap`, `Loop`, …) work uniformly on any arrow.
+`WithTimeout`, `WithTap`, `Fallback`, …) work uniformly on any arrow.
 
 The category laws (identity, associativity, functor, product, coproduct) are
 the package's specification and are checked by property-based tests in
