@@ -1,0 +1,28 @@
+**weft** is a small Go library for composing effectful computations as typed arrows, with the category laws checked by tests. It has no dependencies outside the standard library.
+
+```go
+type Arrow[A, B any] func(ctx context.Context, a A) (B, error)
+```
+
+A pure function, an HTTP call, an LLM request and a whole multi-step pipeline all have this one type. So the same combinators compose all of them: `Compose`, `Par`, `Sum`, `Traverse`, `WithRetry` and the rest.
+
+## Where weft fits in heddle
+
+| Repo | Role |
+|---|---|
+| **weft** | Composition algebra (this repo) |
+| [warp](https://github.com/heedle-ai/warp/wiki) | Content-addressed object store |
+| [shuttle](https://github.com/heedle-ai/shuttle/wiki) | Durable execution on Temporal |
+| [drawdown](https://github.com/heedle-ai/drawdown/wiki) | UI for commits, diffs and provenance |
+
+## Pages
+
+- [Getting Started](Getting-Started): install Go, add weft, run the tests
+- [Combinators](Combinators): every exported function, grouped by what it does
+- [Laws](Laws): which category laws hold, and how each one is tested
+- [Contributing](Contributing): conventions for changes
+
+## Requirements
+
+- Go **1.23** or later
+- Linux (amd64 or arm64), or macOS on Apple Silicon
