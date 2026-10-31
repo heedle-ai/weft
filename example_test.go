@@ -17,7 +17,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/heddle/weft"
+	"github.com/heedle-ai/weft"
 )
 
 // === Domain types ============================================================

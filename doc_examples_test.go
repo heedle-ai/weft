@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/heddle/weft"
+	"github.com/heedle-ai/weft"
 )
 
 func ExampleCompose() {

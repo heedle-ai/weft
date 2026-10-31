@@ -1,3 +1,3 @@
-module github.com/heddle/weft
+module github.com/heedle-ai/weft
 
 go 1.23
