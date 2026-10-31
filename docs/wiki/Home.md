@@ -14,7 +14,8 @@ A pure function, an HTTP call, an LLM request and a whole multi-step pipeline al
 | [draft](https://github.com/heedle-ai/draft/wiki) | Language: s-expressions that compile to shuttle plans |
 | [warp](https://github.com/heedle-ai/warp/wiki) | Content-addressed object store |
 | [shuttle](https://github.com/heedle-ai/shuttle/wiki) | Durable execution on Temporal |
-| [drawdown](https://github.com/heedle-ai/drawdown/wiki) | UI for commits, diffs and provenance |
+| [drawdown](https://github.com/heedle-ai/drawdown/wiki) | Viewing runs and history |
+| [loom](https://github.com/heedle-ai/loom/wiki) | Runs them together: compile, execute, record |
 
 ## Pages
 
