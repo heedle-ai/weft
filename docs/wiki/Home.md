@@ -16,6 +16,7 @@ A pure function, an HTTP call, an LLM request and a whole multi-step pipeline al
 | [draft](https://github.com/heedle-ai/draft/wiki) | Language: s-expressions that compile to shuttle plans |
 | [warp](https://github.com/heedle-ai/warp/wiki) | Content-addressed object store |
 | [shuttle](https://github.com/heedle-ai/shuttle/wiki) | Durable execution on Temporal |
+| [bobbin](https://github.com/heedle-ai/bobbin/wiki) | A fresh Podman container per agent step |
 | [drawdown](https://github.com/heedle-ai/drawdown/wiki) | Web UI: write, run and browse programs and records |
 | [loom](https://github.com/heedle-ai/loom/wiki) | Runs them together: compile, execute, record |
 
