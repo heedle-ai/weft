@@ -4,6 +4,8 @@
 type Arrow[A, B any] func(ctx context.Context, a A) (B, error)
 ```
 
+[[/images/compose-par-sum.svg|alt=String diagrams of Compose (f then g), Par (f and g side by side) and Sum (route to f or g)]]
+
 A pure function, an HTTP call, an LLM request and a whole multi-step pipeline all have this one type. So the same combinators compose all of them: `Compose`, `Par`, `Sum`, `Traverse`, `WithRetry` and the rest.
 
 ## Where weft fits in heedle-ai
@@ -22,6 +24,7 @@ A pure function, an HTTP call, an LLM request and a whole multi-step pipeline al
 - [Getting Started](Getting-Started): install Go, add weft, run the tests
 - [Combinators](Combinators): every exported function, grouped by what it does
 - [Laws](Laws): which category laws hold, and how each one is tested
+- [Invariants](Invariants): every guarantee, the test that guards it, and the mistake it came from
 - [Contributing](Contributing): conventions for changes
 
 ## Requirements

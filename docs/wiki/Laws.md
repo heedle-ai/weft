@@ -1,3 +1,5 @@
+[[/images/compose-par-sum.svg|alt=String diagrams of Compose, Par and Sum]]
+
 weft treats `Arrow` as the morphisms of a Kleisli category for the "may fail, may be cancelled" effect. The laws below are the library's spec: a change that breaks one is a bug.
 
 Two arrows are **equivalent** when, for the same input, they return equal outputs, or both fail with the same error message.
@@ -17,6 +19,15 @@ These use `testing/quick`, checking 200 random inputs per law through `arrowEqui
 | Functor: composition | `Map(Map(f, h₁), h₂) ≡ Map(f, h₂ ∘ h₁)` | `TestMap_PreservesComposition` |
 | `Map` is post-composition | `Map(f, h) ≡ Compose(f, Pure(h))` | `TestMap_EquivalentToComposeWithPure` |
 
+## Product and coproduct laws (property-tested)
+
+| Law | Statement | Test |
+|---|---|---|
+| Product projections | `Par(f, g) ; Fst = f`, `Par(f, g) ; Snd = g` | `TestLaw_ProductProjections` |
+| Coproduct injections | `Left ; Sum(f, g) = f`, `Right ; Sum(f, g) = g` | `TestLaw_CoproductInjections` |
+
+These hold when the other branch succeeds; with `Par`, a failure in either branch fails the whole.
+
 ## Behaviour checked with examples
 
 These are tested on specific cases, not random inputs:
@@ -25,10 +36,6 @@ These are tested on specific cases, not random inputs:
 - **Coproduct (`Sum`)**: `Left` goes to the first branch and `Right` to the second. `Id` works as a branch.
 - **`Fallback`**: the backup runs only when the primary fails, and never after cancellation.
 - **Cancellation**: `Compose` passes cancellation through to later arrows.
-
-## Known gaps
-
-The universal properties of the product and coproduct aren't property-tested yet. For example: `Compose(Par(f, g), Fst) ≡ f` when `g` succeeds, and `Compose(Left-injection, Sum(f, g)) ≡ f`. Adding them is a good first contribution.
 
 ## What the laws don't cover
 

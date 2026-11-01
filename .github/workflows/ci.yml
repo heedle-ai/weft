@@ -31,3 +31,6 @@ jobs:
       - name: test
         working-directory: weft
         run: go test -race ./...
+      - name: invariants
+        working-directory: weft
+        run: bash .github/invariants.sh

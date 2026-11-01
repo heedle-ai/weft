@@ -365,3 +365,28 @@ func TestFallback_DoesNotRecoverFromCancellation(t *testing.T) {
 		t.Error("backup should not run after user cancellation")
 	}
 }
+
+// === Product and coproduct laws (property-tested) ===========================
+
+// TestLaw_ProductProjections: projecting a Par recovers each branch when
+// the other succeeds: Par(f, g) ; Fst = f and Par(f, g) ; Snd = g.
+func TestLaw_ProductProjections(t *testing.T) {
+	f := ArrowFunc(func(_ context.Context, n int) (int, error) { return n*3 + 1, nil })
+	g := ArrowFunc(func(_ context.Context, n int) (string, error) { return fmt.Sprint(n), nil })
+	arrowEquiv(t, Compose(Par(f, g), Fst[int, string]()), f, "Par(f, g) ; Fst = f")
+	arrowEquiv(t, Compose(Par(f, g), Snd[int, string]()), g, "Par(f, g) ; Snd = g")
+}
+
+// TestLaw_CoproductInjections: injecting then summing selects a branch:
+// Left ; Sum(f, g) = f and Right ; Sum(f, g) = g.
+func TestLaw_CoproductInjections(t *testing.T) {
+	f := ArrowFunc(func(_ context.Context, n int) (string, error) {
+		if n%7 == 0 {
+			return "", errors.New("seven")
+		}
+		return fmt.Sprint("int ", n), nil
+	})
+	g := Pure(func(s string) string { return "str " + s })
+	arrowEquiv(t, Compose(Pure(Left[int, string]), Sum(f, g)), f, "Left ; Sum(f, g) = f")
+	arrowEquiv(t, Compose(Pure(Right[int, string]), Sum(f, g)), g, "Right ; Sum(f, g) = g")
+}

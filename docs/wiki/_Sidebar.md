@@ -4,6 +4,7 @@
 - [Getting Started](Getting-Started)
 - [Combinators](Combinators)
 - [Laws](Laws)
+- [Invariants](Invariants)
 - [Contributing](Contributing)
 
 **heedle-ai**
